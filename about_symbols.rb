@@ -96,5 +96,5 @@ class AboutSymbols < Neo::Koan
 
   # THINK ABOUT IT:
   #
-  # Why is it not a good idea to dynamically create a lot of symbols? Dynamically created symbols can become memory leaks because they stay in memory until the program exits. NOT THE CASE FOR MOST RECENT RUBY RELEASE (2.2?) because symbols dynamically created (with to_sym method) are garbage collected: https://www.sitepoint.com/symbol-gc-ruby-2-2/
+  # Why is it not a good idea to dynamically create a lot of symbols? Dynamically created symbols can become memory leaks because they stay in memory until the program exits. NOT THE CASE FOR MOST RECENT RUBY RELEASE (2.2?) because symbols dynamically created (to_sym method for example) are garbage collected. Symbols created as a result of a new method, string, etc and symbols that are statically created: https://www.sitepoint.com/symbol-gc-ruby-2-2/
 end
