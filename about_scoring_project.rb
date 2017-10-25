@@ -61,7 +61,9 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #   totalScore
 # end
 
-def score(dice)
+ #### solution with INJECT
+
+ def score(dice)
 
   #return 0 if empty dice array
   if dice.length == 0
