@@ -29,17 +29,6 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
-# def score(dice)
-#   # You need to write this method
-#   sorted = dice.sort
-#   sorted.each do |die|
-#     score = 0
-#     if sorted[2] == 1
-#       score += 1000
-#     end
-#   end
-#   score
-# end
 
 # def score(dice)
 
