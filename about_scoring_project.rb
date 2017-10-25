@@ -41,21 +41,62 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #   score
 # end
 
+# def score(dice)
+
+#   if dice.length == 0
+#     return 0
+#   end
+#   if dice.length > 0
+#     numRolls = Hash.new(0)
+#     dice.each do |die|
+#       numRolls[die] += 1
+#     end
+#   end
+
+#   totalScore = 0
+
+#   numRolls.each do |dieVal, dieRolls|
+#     if dieRolls >= 3 && dieVal == 1
+#       totalScore += 1000
+#     end
+#     if  dieVal != 1 && dieRolls >= 3
+#       totalScore += (dieVal * 100)
+#     end
+#     if dieVal == 1 && dieRolls < 3
+#       totalScore += (dieRolls * 100)
+#     end
+#     if dieVal == 5 && dieRolls < 3
+#       totalScore += (dieRolls * 50)
+#     end
+#   end
+#   totalScore
+# end
+
 def score(dice)
 
+  #return 0 if empty dice array
   if dice.length == 0
     return 0
   end
+
+  #keep track of number of rolls for each number with Hash
+  numRolls = Hash.new(0)
+
+  #populate Hash
+  #expect [5,5,1,2] to look like: {5=>2, 1=>1, 2=>1}
   if dice.length > 0
-    numRolls = Hash.new(0)
     dice.each do |die|
       numRolls[die] += 1
     end
   end
 
-  totalScore = 0
+# puts "this is my Hash #{numRolls}"
 
-  numRolls.each do |dieVal, dieRolls|
+  #reduce Hash to total score
+  #numRolls = {dieVal=>dieRolls}
+  #initial value of totalScore = 0
+
+  numRolls.inject(0) do |totalScore, dieRolls, dieVal|
     if dieRolls >= 3 && dieVal == 1
       totalScore += 1000
     end
@@ -68,8 +109,9 @@ def score(dice)
     if dieVal == 5 && dieRolls < 3
       totalScore += (dieRolls * 50)
     end
+    totalScore
   end
-  totalScore
+
 end
 
 class AboutScoringProject < Neo::Koan
