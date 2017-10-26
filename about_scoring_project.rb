@@ -29,79 +29,34 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 #
 # Your goal is to write the score method.
 
+def score(dice)
+  total_score = 0
 
-# def score(dice)
-
-#   if dice.length == 0
-#     return 0
-#   end
-#   if dice.length > 0
-#     numRolls = Hash.new(0)
-#     dice.each do |die|
-#       numRolls[die] += 1
-#     end
-#   end
-
-#   totalScore = 0
-
-#   numRolls.each do |dieVal, dieRolls|
-#     if dieRolls >= 3 && dieVal == 1
-#       totalScore += 1000
-#     end
-#     if  dieVal != 1 && dieRolls >= 3
-#       totalScore += (dieVal * 100)
-#     end
-#     if dieVal == 1 && dieRolls < 3
-#       totalScore += (dieRolls * 100)
-#     end
-#     if dieVal == 5 && dieRolls < 3
-#       totalScore += (dieRolls * 50)
-#     end
-#   end
-#   totalScore
-# end
-
- #### solution with INJECT
-
- def score(dice)
-
-  #return 0 if empty dice array
-  if dice.length == 0
-    return 0
+  # tally dice rolls
+  tally = dice.inject(Hash.new(0)) do |total_rolls, current_die|
+    total_rolls[current_die] += 1
+    total_rolls
   end
 
-  #keep track of number of rolls for each number with Hash
-  numRolls = Hash.new(0)
-
-  #populate Hash
-  #expect [5,5,1,2] to look like: {5=>2, 1=>1, 2=>1}
-  if dice.length > 0
-    dice.each do |die|
-      numRolls[die] += 1
-    end
+  # account for single and triple 1s
+  ones = tally[1]
+  if ones >= 3
+    total_score += (1000 + ((ones - 3) * 100))
+  elsif total_score += (dice.count(1) % 3) * 100
   end
 
-# puts "this is my Hash #{numRolls}"
+  # account for single 5s
+  total_score += (dice.count(5) % 3) * 50
 
-  #reduce Hash to total score
-  #numRolls = {dieVal=>dieRolls}
-  #initial value of totalScore = 0
-
-  numRolls.inject(0) do |totalScore, dieRolls, dieVal|
-    if dieRolls >= 3 && dieVal == 1
-      totalScore += 1000
+  # account for triple numbers 2-6
+  tally.each do |die_val, die_rolls|
+    if ((die_rolls / 3) == 1) && die_val != 1
+      total_score += die_val * 100
     end
-    if  dieVal != 1 && dieRolls >= 3
-      totalScore += (dieVal * 100)
-    end
-    if dieVal == 1 && dieRolls < 3
-      totalScore += (dieRolls * 100)
-    end
-    if dieVal == 5 && dieRolls < 3
-      totalScore += (dieRolls * 50)
-    end
-    totalScore
+    total_score
   end
+
+  total_score
 
 end
 
